@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- 在 head 标签中添加 meta 标签，并设置 viewport-fit=cover 值 -->
+    <meta name="viewport" ontent="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"/>
+    <!-- 如果有安装 Google Chrome Frame 插件则强制为Chromium内核，否则强制本机支持的最高版本IE内核，作用于IE浏览器，避免IE使用兼容模式 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+		<!-- 启用360浏览器的极速模式(webkit) -->
+		<meta name="renderer" content="webkit" />
+		<!-- 强制Chromium内核，作用于其他双核浏览器 -->
+		<meta name="force-rendering" content="webkit" />
+		<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+		<meta name="HandheldFriendly" content="true" />
+		<!-- 微软的老式浏览器 -->
+		<meta name="MobileOptimized" content="320" />
+		<!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<!-- uc强制竖屏 -->
+		<meta name="screen-orientation" content="portrait" />
+		<!-- QQ强制竖屏 -->
+		<meta name="x5-orientation" content="portrait" />
+    <!-- 点击无高光 -->
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
