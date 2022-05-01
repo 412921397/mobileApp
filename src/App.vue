@@ -27,17 +27,26 @@
         </van-form>
       </van-config-provider>
     </van-config-provider>
+    <van-button round block type="primary" @click="mulment">{{ count }}</van-button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from "vue";
 import home from "@/views/homeIdex.vue";
+import { useUserStore } from "@/store/modules/user";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "App",
   components: { home },
   setup() {
+    const store = useUserStore();
+    const { count, userName } = storeToRefs(store);
+
+    const name = store.name;
+    console.log(name, "aaa");
+
     const themeBg = ref(true);
 
     const rate = ref(4);
@@ -57,6 +66,10 @@ export default defineComponent({
       themeBg.value = !themeBg.value;
     };
 
+    const mulment = () => {
+      store.mulment();
+    };
+
     const theme = computed(() => {
       let theme: string;
       themeBg.value ? (theme = "light") : (theme = "dark");
@@ -67,12 +80,15 @@ export default defineComponent({
       console.log(process.env, "process");
     });
     return {
+      count,
+      userName,
       themeBg,
       theme,
       rate,
       slider,
       themeVars,
-      themeClick
+      themeClick,
+      mulment
     };
   }
 });
