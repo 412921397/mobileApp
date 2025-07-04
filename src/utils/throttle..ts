@@ -1,15 +1,19 @@
 export default function throttle(
-  fn,
+  fn: (...args: any[]) => any,
   interval = 1000,
-  options = { leading: true, trailing: false }
+  options: { leading: boolean; trailing: boolean; resultCallback?: (result: any) => void } = {
+    leading: true,
+    trailing: false,
+    resultCallback: undefined
+  }
 ) {
   // 1.记录上一次的开始时间
   const { leading, trailing, resultCallback } = options;
   let lastTime = 0;
-  let timer = null;
+  let timer: NodeJS.Timeout | null = null;
 
   // 2.事件触发时, 真正执行的函数
-  const _throttle = function (...args) {
+  const _throttle = function (this: unknown, ...args: Parameters<typeof fn>) {
     return new Promise((resolve, reject) => {
       // 2.1.获取当前事件触发时的时间
       const nowTime = new Date().getTime();

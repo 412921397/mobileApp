@@ -1,10 +1,15 @@
-export default function debounce(fn, delay = 500, immediate = false, resultCallback) {
+export default function debounce(
+  fn: (...args: any[]) => any,
+  delay = 500,
+  immediate = false,
+  resultCallback?: (result: any) => void
+) {
   // 1.定义一个定时器, 保存上一次的定时器
-  let timer = null;
+  let timer: ReturnType<typeof setTimeout> | null = null;
   let isInvoke = false;
 
   // 2.真正执行的函数
-  const _debounce = function (...args) {
+  const _debounce = function (this: unknown, ...args: any[]) {
     return new Promise((resolve, reject) => {
       // 取消上一次的定时器
       if (timer) clearTimeout(timer);
