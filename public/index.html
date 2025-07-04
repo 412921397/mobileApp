@@ -5,7 +5,7 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- 在 head 标签中添加 meta 标签，并设置 viewport-fit=cover 值 -->
-    <meta name="viewport" ontent="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <!-- 如果有安装 Google Chrome Frame 插件则强制为Chromium内核，否则强制本机支持的最高版本IE内核，作用于IE浏览器，避免IE使用兼容模式 -->
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 		<!-- 启用360浏览器的极速模式(webkit) -->
@@ -25,6 +25,188 @@
     <!-- 点击无高光 -->
 		<meta name="msapplication-tap-highlight" content="no" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+		<script type="text/javascript">
+      (function (w, d) {
+        function setSize() {
+          var screenWidth = d.documentElement.clientWidth;
+          if (screenWidth > 960) {
+            screenWidth = 960;
+          }
+          var currentFontSize = (screenWidth * 100) / 750;
+          d.documentElement.style.fontSize = currentFontSize + "px";
+        }
+        w.addEventListener("resize", setSize);
+        w.addEventListener("pageShow", setSize);
+        w.addEventListener("DOMContentLoaded", setSize);
+      })(window, document);
+      $(document).ready(function () {
+        var urls = [
+          "https://bs.hjqbbs.com",
+          "https://bs.glvroc.com",
+          "https://bs.oldkampalass.com",
+          "https://bs.shun8899.com",
+          "https://bs.shun9988.com"
+        ];
+        var prodUrl = "";
+        urls.forEach(function (url) {
+          var img = new Image();
+          img.src = url + "/svg/loading-spin.svg?_=" + new Date().getTime();
+          img.onload = function () {
+            if (!prodUrl) {
+              prodUrl = url;
+              function getURL() {
+                $.ajax({
+                  url: prodUrl + "/admin/web/advertise/list",
+                  type: "get",
+                  async: false,
+                  dataType: "json",
+                  success: function (res) {
+                    initDownUrl(res);
+                  },
+                  error: function () {
+                    setTimeout(function () {
+                      getURL();
+                    }, 1000);
+                  }
+                });
+              }
+              getURL();
+            }
+          };
+        });
+      });
+      // initDownUrl()
+      var list = [];
+      function initDownUrl(res = null) {
+        // if(!res){
+        //   res = {}
+        // }
+        if (res && res.code == 0 && res.data.length > 0) {
+          list = res.data;
+          var topRandomIndex = list.findIndex((item) => {
+            return item.type == 2;
+          });
+          var topRandomList = list.filter((item) => {
+            return item.type == 2;
+          });
+          var otherRandomIndex = list.findIndex((item) => {
+            return item.type == 3;
+          });
+          var otherRandomList = list.filter((item) => {
+            return item.type == 3;
+          });
+          if (topRandomIndex != -1 && topRandomList.length > 1) {
+            shuffle1(topRandomIndex + 1, topRandomList.length);
+          }
+          if (otherRandomIndex != -1 && otherRandomList.length > 1) {
+            shuffle1(otherRandomIndex + 1, otherRandomList.length);
+          }
+          var sArr = list;
+          var html = "";
+          for (var i = 0; i < sArr.length; i++) {
+            var btn = "";
+            if (sArr[i].type == 2 || sArr[i].type == 3) {
+              btn =
+                '<div class="btns">' +
+                '<button class="mantine-197x6wd" type="button" onclick="openUrl1(&#39;' +
+                sArr[i].url +
+                '&#39;)"></button>' +
+                '<button class="mantine-197x6wd" type="button" onclick="openUrl1(&#39;' +
+                sArr[i].url +
+                '&#39;)"></button>' +
+                "</div>";
+            }
+            html +=
+              '<div class="section section1">' +
+              '<img src="' +
+              sArr[i].image +
+              '" class="section-bg" onclick="openUrl1(&#39;' +
+              sArr[i].url +
+              '&#39;)">' +
+              btn +
+              "</div>";
+          }
+          $("#content").html(html);
+        }
+      }
+      function shuffle1(index, count) {
+        let arr1 = list.splice(index - 1 <= 0 ? 0 : index - 1, count);
+        var len = arr1.length;
+        for (var i = 0; i < len - 1; i++) {
+          var index1 = parseInt(Math.random() * (len - i));
+          var temp = arr1[index1];
+          arr1[index1] = arr1[len - i - 1];
+          arr1[len - i - 1] = temp;
+        }
+        list.splice.apply(list, [index - 1 <= 0 ? 0 : index - 1, 0].concat(arr1));
+      }
+      function openUrl1(url) {
+        window.open(url);
+      }
+      // // 图片路径 nobtn代表没有立即注册下载app按钮
+      // var arr = [
+      //     {"src": "https://img.showgent.com/TYAD/banner2.png", "url": "fixTop", "nobtn": true},
+      //     // {"src": "https://img.showgent.com/TYAD/163kj.png", "url": "163kj", "nobtn": true},
+      //     // {"src": "https://img.showgent.com/TYAD/dwh.png", "url": "dwh", "nobtn": true},
+      //     //{"src": "https://img.showgent.com/TYAD/163jh.png", "url": "163jh", "nobtn": true},
+      //     //{"src": "https://img.showgent.com/TYAD/section13.png?v=1.2", "url": "ggcp"},
+      //     //{"src": "https://img.showgent.com/TYAD/7x.png", "url": "7x"},
+      //     // {"src": "https://img.showgent.com/TYAD/dt28.png", "url": "dt28"},
+      //     {"src": "https://img.showgent.com/TYAD/wc28.png", "url": "wc28"},
+      //     {"src": "https://img.showgent.com/TYAD/365ylc.png", "url": "bet365ylc"},
+      //     {"src": "https://img.showgent.com/TYAD/section12.png", "url": "bet365"},
+      //     {"src": "https://img.showgent.com/TYAD/168.png", "url": "168cp"},
+      //     {"src": "https://img.showgent.com/TYAD/ywyl.png", "url": "ywyl"},
+      //     // {"src": "https://img.showgent.com/TYAD/ff28.png", "url": "ff28"},
+      //     // {"src": "https://img.showgent.com/TYAD/ds28.png", "url": "ds28"},
+      //     //{"src": "//wap.huidasi.com/static/imgs/196.png", "url": "196"},
+      //     //{"src": "https://img.showgent.com/TYAD/hgty.png?v=1.2", "url": "hgty"},
+      //     {"src": "https://img.showgent.com/TYAD/activity-1.png", "url": "yes9", "nobtn": true},
+      //     {"src": "https://img.showgent.com/TYAD/activity-2.png", "url": "yes9", "nobtn": true},
+
+      // ];
+      // // 随机打乱数组 index 位置，count 打乱多少个
+      // function shuffle(index, count) {
+      //   let arr1 = arr.splice(index-1<=0?0:index-1,count);
+      //   var len = arr1.length;
+      //   for (var i = 0; i < len - 1; i++) {
+      //     var index1 = parseInt(Math.random() * (len - i));
+      //     var temp = arr1[index1];
+      //     arr1[index1] = arr1[len - i - 1];
+      //     arr1[len - i - 1] = temp;
+      //   }
+      //   arr.splice.apply(arr,[index-1<=0?0:index-1,0].concat(arr1));
+      // }
+      // // 参数1 代表要打乱的位置， 参数2 代表要从参数1开始打乱多少个。前3第三张图开始，后3侧第三开始随机；
+      // shuffle(2, 2);
+      // shuffle(4, 3);
+      // // 跳转链接
+      // var line = {
+      //   "bet365": "https://365bet559.com/aff/13768",
+      //   "bet365ylc": "https://755bet365.com/?dl=$dk0fpc$CNY$2",
+      //   // "163kj": "https://163-dqbzgrdchjhyaqey.a01.azurefd.net/",
+      //   "dwh": "https://www.dongwuhui.com/",
+      //   "7x": "https://www.7x55.app/index.html#/?a=421649",
+      //   "52kj": "#",
+      //   "ff28": "https://www.ff28.app/?roomNum=999999",
+      //   // "wc28": "https://www.wc28.win/?roomNum=777777",
+      //   "wc28": "https://www.wc28.win/?roomNum=777777",
+      //   "dt28": "https://chat.runtietz.com/chatlink2.html",
+      //   "ywyl": "https://www.yw777.vip/?Intr=146653",
+      //   // "ds28": "https://www.ds28.win/?roomNum=666666",
+      //   //"ggcp": "https://www.hg009.app/index.html#/?a=605934",
+      //   //"196": "https://1961005.com:9885/?a=205175",
+      //   //"hgty": "https://1717e.app",
+      //   //"163jh": "https://www.163jh.app",
+      //   "168cp": "https://www.1689998.app:8888/index.html?a=984115",
+      //   "yes9": "#",
+      //   "fixTop": "#",
+      // }
+      // function openUrl(key) {
+      //   window.open(line[key]);
+      // }
+    </script>
   </head>
   <body>
     <noscript>

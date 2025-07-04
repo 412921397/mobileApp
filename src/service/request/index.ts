@@ -1,6 +1,6 @@
-import axios from "axios";
-import type { AxiosInstance } from "axios";
-import type { HYRequestInterceptors, HYRequestConfig } from "./types";
+import axios from 'axios';
+import type { AxiosInstance } from 'axios';
+import type { HYRequestInterceptors, HYRequestConfig } from './types';
 
 const DEAFULT_LOADING = true;
 
@@ -58,7 +58,7 @@ class HYRequest {
 
         const data = res.data;
         if (+data.returnCode === -1001) {
-          console.log("请求失败~, 错误信息");
+          console.log('请求失败~, 错误信息');
         } else {
           return data;
         }
@@ -70,7 +70,7 @@ class HYRequest {
 
         // 例子: 判断不同的HttpErrorCode显示不同的错误信息
         if (err.response.status === 404) {
-          console.log("404的错误~");
+          console.log('404的错误~');
         }
         return err;
       }
@@ -112,19 +112,19 @@ class HYRequest {
   }
 
   get<T = any>(config: HYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "GET" });
+    return this.request<T>({ ...config, method: 'GET' });
   }
 
   post<T = any>(config: HYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "POST" });
+    return this.request<T>({ ...config, method: 'POST' });
   }
 
   delete<T = any>(config: HYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "DELETE" });
+    return this.request<T>({ ...config, method: 'DELETE' });
   }
 
   patch<T = any>(config: HYRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: "PATCH" });
+    return this.request<T>({ ...config, method: 'PATCH' });
   }
 }
 

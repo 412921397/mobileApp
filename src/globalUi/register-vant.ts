@@ -1,4 +1,4 @@
-import { App } from "vue";
+import { App } from 'vue';
 import {
   Button,
   List,
@@ -57,8 +57,8 @@ import {
   Tabs,
   ConfigProvider,
   Form
-} from "vant";
-import "vant/lib/index.css";
+} from 'vant';
+import 'vant/lib/index.css';
 
 export function registerVant(app: App): void {
   app.use(Button);
@@ -118,4 +118,5 @@ export function registerVant(app: App): void {
   app.use(Tabs);
   app.use(ConfigProvider);
   app.use(Form);
+  app.use(Toast);
 }

@@ -1,5 +1,5 @@
-import { createPinia } from "pinia";
-import { setupUser } from "./modules/user";
+import { createPinia } from 'pinia';
+import { setupUser } from './modules/user';
 
 const store = createPinia();
 

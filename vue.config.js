@@ -1,15 +1,15 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   // 1.配置方式一: CLI提供的属性
-  outputDir: "./build",
+  outputDir: './build',
   devServer: {
     port: 9527,
     proxy: {
-      "^/api": {
-        target: "http://baidu.com",
+      '^/api': {
+        target: 'https://98pay-dev-member.newtwwin.com:9898/#/',
         pathRewrite: {
-          "^/api": ""
+          '^/api': ''
         },
         changeOrigin: true
       }
@@ -18,8 +18,8 @@ module.exports = {
   // 2.配置方式二: 和webpack属性完全一致, 最后会进行合并
   configureWebpack: (config) => {
     config.resolve.alias = {
-      "@": path.resolve(__dirname, "src"),
-      components: "@/components"
+      '@': path.resolve(__dirname, 'src'),
+      components: '@/components'
     };
   }
   // 3.配置方式三:

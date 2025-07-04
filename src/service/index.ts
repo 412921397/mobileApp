@@ -1,9 +1,9 @@
 // service统一出口
-import type { AxiosRequestHeaders } from "axios";
-import HYRequest from "./request";
-import { BASE_URL, TIME_OUT } from "./request/config";
+import type { AxiosRequestHeaders } from 'axios';
+import HYRequest from './request';
+import { BASE_URL, TIME_OUT } from './request/config';
 
-import localCache from "@/utils/cache";
+import localCache from '@/utils/cache';
 
 const hyRequest = new HYRequest({
   baseURL: BASE_URL,
@@ -11,7 +11,7 @@ const hyRequest = new HYRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = localCache.getCache("token");
+      const token = localCache.getCache('token');
       if (token) (config.headers as AxiosRequestHeaders).Authorization = `Bearer ${token}`;
 
       // console.log("请求成功的拦截");

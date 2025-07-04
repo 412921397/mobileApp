@@ -1,15 +1,14 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
 export function setupUser() {
   const userStore = useUserStore();
 }
 
-export const useUserStore = defineStore({
-  id: "user",
+export const useUserStore = defineStore('user', {
   state: () => ({
-    name: "王小波",
+    name: '王小波',
     count: 1,
-    userName: "hanmeimei"
+    userName: 'hanmeimei'
   }),
   getters: {},
   actions: {
